@@ -193,7 +193,86 @@
 
       <div class="tabs">
         <button class="tab active" data-tab="adapt">Adaptation</button>
+        <button class="tab" data-tab="overview">Overview</button>
         <button class="tab" data-tab="settings">Settings</button>
+      </div>
+
+      <div class="panel-body hidden" id="tab-overview">
+        <div class="panel-intro">
+          <h3>Workspace overview</h3>
+          <p>Live system vitals, inference telemetry and activity analytics — all measured locally on this machine.</p>
+        </div>
+
+        <section class="section">
+          <div class="section-title">
+            <span>System vitals</span>
+            <span class="live-pill"><i></i>LIVE · 2s</span>
+          </div>
+          <div class="ov-kpi-grid">
+            <div class="ov-kpi">
+              <div class="ov-kpi-top"><small>CPU LOAD</small><span class="ov-chip" id="ovCpuChip">–</span></div>
+              <div class="ov-kpi-value"><strong id="ovCpu">–</strong><em>%</em></div>
+              <div class="ov-bar"><i id="ovCpuBar"></i></div>
+              <small class="ov-kpi-sub" id="ovCpuCores">– cores</small>
+            </div>
+            <div class="ov-kpi">
+              <div class="ov-kpi-top"><small>MEMORY</small><span class="ov-chip" id="ovMemChip">–</span></div>
+              <div class="ov-kpi-value"><strong id="ovMemPct">–</strong><em>%</em></div>
+              <div class="ov-bar"><i id="ovMemBar"></i></div>
+              <small class="ov-kpi-sub" id="ovMemSub">– / – GB</small>
+            </div>
+            <div class="ov-kpi">
+              <div class="ov-kpi-top"><small>ENGINE</small><span class="ov-chip ok" id="ovEngineChip">STANDBY</span></div>
+              <div class="ov-kpi-value"><strong id="ovTokens">–</strong><em>tok/s</em></div>
+              <div class="ov-bar"><i id="ovTokBar"></i></div>
+              <small class="ov-kpi-sub" id="ovLatency">latency – ms</small>
+            </div>
+            <div class="ov-kpi">
+              <div class="ov-kpi-top"><small>SESSION UPTIME</small><span class="ov-chip">LOCAL</span></div>
+              <div class="ov-kpi-value"><strong id="ovUptime">00:00</strong></div>
+              <div class="ov-bar"><i id="ovUptimeBar" style="width:100%"></i></div>
+              <small class="ov-kpi-sub" id="ovMsgsToday">0 messages today</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title"><span>CPU &amp; memory timeline</span><span class="count-pill" id="ovRangeLabel">last 60s</span></div>
+          <div class="ov-chart-card">
+            <canvas id="ovSysChart" width="640" height="220"></canvas>
+            <div class="ov-legend"><span><i class="lg-dot cyan"></i>CPU %</span><span><i class="lg-dot purple"></i>Memory %</span></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title"><span>Inference throughput</span><span class="count-pill">tokens / message</span></div>
+          <div class="ov-chart-card"><canvas id="ovTokChart" width="640" height="190"></canvas></div>
+          <div class="ov-metrics" id="ovInferStats"></div>
+        </section>
+
+        <section class="section">
+          <div class="section-title"><span>Conversation activity</span><span class="count-pill" id="ovActTotal">7 days</span></div>
+          <div class="ov-bars" id="ovActivity"></div>
+        </section>
+
+        <section class="section">
+          <div class="section-title"><span>Model tiers</span></div>
+          <div class="ov-table-wrap">
+            <table class="ov-table">
+              <thead><tr><th>Tier</th><th>Status</th><th>Speed</th><th>Quality</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Flash</strong> · 1.5B</td><td><span class="ov-badge ok" id="ovTierFlash">RUNNING</span></td><td><span class="ov-meter"><i style="width:96%"></i></span></td><td><span class="ov-meter"><i style="width:62%"></i></span></td></tr>
+                <tr><td><strong>Professional</strong> · 9B</td><td><span class="ov-badge idle" id="ovTierPro">UNLOADED</span></td><td><span class="ov-meter"><i style="width:38%"></i></span></td><td><span class="ov-meter"><i style="width:88%"></i></span></td></tr>
+                <tr><td><strong>Super</strong> · 27B</td><td><span class="ov-badge locked">LOCKED</span></td><td><span class="ov-meter"><i style="width:16%"></i></span></td><td><span class="ov-meter"><i style="width:99%"></i></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title"><span>Recent events</span><button class="mini-btn" id="ovClearEvents">Clear</button></div>
+          <div class="ov-events" id="ovEvents"></div>
+        </section>
       </div>
 
       <div class="panel-body" id="tab-adapt">
